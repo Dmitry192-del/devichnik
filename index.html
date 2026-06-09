@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Твой девичник, Ляйсян 💕</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -79,6 +81,7 @@ body {
   display:flex; flex-direction:column;
   align-items:center; justify-content:center;
   position:relative; text-align:center;
+  contain:layout style;
   padding:60px 20px;
   background:
     radial-gradient(ellipse at 20% 10%,rgba(242,196,196,.45) 0%,transparent 55%),
@@ -766,10 +769,6 @@ h1 em { font-style:italic; color:var(--deep-rose); display:block; }
   <div class="petal" style="left:20%;width:12px;height:16px;background:#d4728a;animation-duration:14s;animation-delay:2s;opacity:.5"></div>
   <div class="petal" style="left:35%;width:20px;height:24px;background:#f7e9d7;animation-duration:10s;animation-delay:1s;"></div>
   <div class="petal" style="left:55%;width:14px;height:18px;background:#f2c4c4;animation-duration:13s;animation-delay:3s;"></div>
-  <div class="petal" style="left:70%;width:16px;height:20px;background:#d4728a;animation-duration:11s;animation-delay:.5s;opacity:.4"></div>
-  <div class="petal" style="left:85%;width:10px;height:14px;background:#f7e9d7;animation-duration:15s;animation-delay:4s;"></div>
-  <div class="petal" style="left:92%;width:22px;height:26px;background:#f2c4c4;animation-duration:9s;animation-delay:1.5s;opacity:.5"></div>
-  <div class="petal" style="left:47%;width:8px;height:12px;background:#d4728a;animation-duration:16s;animation-delay:2.5s;opacity:.3"></div>
 
   <p class="tag">Это твой вечер</p>
   <div class="hero-ribbon">
@@ -920,6 +919,7 @@ h1 em { font-style:italic; color:var(--deep-rose); display:block; }
 
 
 <!-- ═══ GALLERY ══════════════════════════════════════════════════ -->
+<!-- ФОТО: замени src у каждого <img> на свой файл или ссылку     -->
 <section class="gallery">
   <h2 class="section-title reveal">Наши с тобой <em style="font-style:italic;color:var(--rose)">мгновения</em></h2>
   <p class="section-sub reveal">Все эти моменты — часть твоей истории 🌸</p>
@@ -954,7 +954,7 @@ h1 em { font-style:italic; color:var(--deep-rose); display:block; }
   <h2 class="section-title reveal">Мы тебя <em style="font-style:italic;color:var(--rose)">ждём</em></h2>
   <p class="section-sub reveal">Специально подобранное — только для тебя</p>
   <div class="map-wrap reveal">
-    <iframe src="https://yandex.ru/map-widget/v1/?ll=50.200580%2C53.271196&z=17&pt=50.200580%2C53.271196~pmrdm1" allowfullscreen loading="lazy" frameborder="0"></iframe>
+    <iframe loading="lazy" src="https://yandex.ru/map-widget/v1/?ll=50.200580%2C53.271196&z=17&pt=50.200580%2C53.271196~pmrdm1" allowfullscreen loading="lazy" frameborder="0"></iframe>
   </div>
   <div class="map-address reveal">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
@@ -1039,14 +1039,27 @@ if(isTouch){
 // ─── Confetti ──────────────────────────────────────────────────
 const cCvs=document.getElementById('confetti-canvas');
 const cCtx=cCvs.getContext('2d');
-let W,H,parts=[];
+let W,H,parts=[],tabVisible=true;
 function resizeC(){W=cCvs.width=window.innerWidth;H=cCvs.height=window.innerHeight}
-resizeC(); window.addEventListener('resize',resizeC);
-const COLS=['#f2c4c4','#d4728a','#c9a96e','#f7e9d7','#a84e65','#fff'];
-function rp(){return{x:Math.random()*W,y:-10,r:Math.random()*5+3,d:Math.random()*.8+.4,color:COLS[Math.random()*COLS.length|0],angle:Math.random()*360,spin:(Math.random()-.5)*4,vx:(Math.random()-.5)*1.5,shape:Math.random()>.5?'circle':'rect',alpha:Math.random()*.6+.3}}
-for(let i=0;i<70;i++){const p=rp();p.y=Math.random()*H;parts.push(p)}
-function drawP(p){cCtx.save();cCtx.globalAlpha=p.alpha;cCtx.translate(p.x,p.y);cCtx.rotate(p.angle*Math.PI/180);cCtx.fillStyle=p.color;if(p.shape==='circle'){cCtx.beginPath();cCtx.arc(0,0,p.r,0,Math.PI*2);cCtx.fill()}else{cCtx.fillRect(-p.r,-p.r*.5,p.r*2,p.r)}cCtx.restore()}
-(function animC(){cCtx.clearRect(0,0,W,H);parts.forEach(p=>{p.y+=p.d;p.x+=p.vx;p.angle+=p.spin;if(p.y>H+20)Object.assign(p,rp());drawP(p)});requestAnimationFrame(animC)})();
+resizeC();
+// throttle resize
+let resizeT; window.addEventListener('resize',()=>{clearTimeout(resizeT);resizeT=setTimeout(resizeC,200)});
+// pause when tab hidden
+document.addEventListener('visibilitychange',()=>{tabVisible=!document.hidden});
+const COLS=['#f2c4c4','#d4728a','#f7e9d7','#a84e65'];
+function rp(){return{x:Math.random()*W,y:Math.random()*H,r:Math.random()*4+2,d:Math.random()*.6+.3,color:COLS[Math.random()*COLS.length|0],angle:Math.random()*360,spin:(Math.random()-.5)*3,vx:(Math.random()-.5)*1,alpha:Math.random()*.5+.2}}
+// only 28 particles
+for(let i=0;i<28;i++) parts.push(rp());
+function drawP(p){cCtx.save();cCtx.globalAlpha=p.alpha;cCtx.translate(p.x,p.y);cCtx.rotate(p.angle*Math.PI/180);cCtx.fillStyle=p.color;cCtx.beginPath();cCtx.arc(0,0,p.r,0,Math.PI*2);cCtx.fill();cCtx.restore()}
+// run at ~30fps not 60
+let lastC=0;
+(function animC(ts){
+  requestAnimationFrame(animC);
+  if(!tabVisible) return;
+  if(ts-lastC<33) return; lastC=ts;
+  cCtx.clearRect(0,0,W,H);
+  parts.forEach(p=>{p.y+=p.d;p.x+=p.vx;p.angle+=p.spin;if(p.y>H+10)Object.assign(p,rp(),{y:-10});drawP(p)});
+})();
 
 // ─── Scroll reveal ─────────────────────────────────────────────
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.12});
@@ -1054,6 +1067,10 @@ document.querySelectorAll('.reveal,.section-title,.section-sub,.program-item,.pa
 document.querySelectorAll('.program-item').forEach((el,i)=>el.style.transitionDelay=(i*.12)+'s');
 
 // ─── Countdown ─────────────────────────────────────────────────
+// ЗАМЕНИ дату ниже на свою: new Date('YYYY-MM-DDTHH:MM:SS')
+// Самарское время = UTC+4 (нет перехода на летнее)
+// 13 июня 2026, 00:00 по Самаре = 13 июня 2026, 20:00 UTC предыдущего дня
+// т.е. UTC: 2026-06-12T20:00:00Z
 const EVENT_DATE = new Date('2026-06-13T00:00:00+04:00');
 function updateCD(){
   const diff = EVENT_DATE - Date.now();
@@ -1102,7 +1119,7 @@ function explode(r){
 }
 
 function animFW(){
-  if(!fwActive){requestAnimationFrame(animFW);return}
+  if(!fwActive||document.hidden){requestAnimationFrame(animFW);return}
   fwCtx.clearRect(0,0,fwW,fwH);
   rockets.forEach(r=>{
     if(!r.exploded){
@@ -1135,8 +1152,8 @@ const fwObs=new IntersectionObserver(entries=>{
       let count=0;
       const burst=setInterval(()=>{
         launchRocket(); count++;
-        if(count>=12)clearInterval(burst);
-      },400);
+        if(count>=8)clearInterval(burst);
+      },500);
     }
   });
 },{threshold:.3});
