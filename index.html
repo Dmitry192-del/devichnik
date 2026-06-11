@@ -1257,13 +1257,15 @@ fwObs.observe(document.querySelector('.closing'));
   function openLB(i){
     const imgs = slides.map(s=>s.querySelector('img')).filter(Boolean);
     if(!imgs[i])return;
-    lbIdx=i; lbImg.src=imgs[i].src; lightbox.classList.add('open');
+    lbIdx=i; lbImg.src=imgs[i].src; openLightbox();
   }
   slides.forEach((s,i)=>{
     s.addEventListener('click', ()=>{ if(!dragging) openLB(i); });
   });
-  document.getElementById('lb-close').onclick = ()=> lightbox.classList.remove('open');
-  lightbox.addEventListener('click', e=>{ if(e.target===lightbox) lightbox.classList.remove('open'); });
+  function openLightbox(){ lightbox.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeLightbox(){ lightbox.classList.remove('open'); document.body.style.overflow=''; }
+  document.getElementById('lb-close').onclick = closeLightbox;
+  lightbox.addEventListener('click', e=>{ if(e.target===lightbox) closeLightbox(); });
   document.getElementById('lb-prev').onclick = ()=>{
     const imgs=slides.map(s=>s.querySelector('img')).filter(Boolean);
     lbIdx=(lbIdx-1+imgs.length)%imgs.length; lbImg.src=imgs[lbIdx].src;
@@ -1274,7 +1276,7 @@ fwObs.observe(document.querySelector('.closing'));
   };
   document.addEventListener('keydown', e=>{
     if(!lightbox.classList.contains('open'))return;
-    if(e.key==='Escape') lightbox.classList.remove('open');
+    if(e.key==='Escape') closeLightbox();
     if(e.key==='ArrowLeft')  document.getElementById('lb-prev').click();
     if(e.key==='ArrowRight') document.getElementById('lb-next').click();
   });
