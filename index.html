@@ -551,6 +551,25 @@ h1 em { font-style:italic; color:var(--deep-rose); display:block; }
   transform:scale(1);
 }
 
+/* caption block */
+.slide-caption-box {
+  max-width:min(72vw, 360px);
+  margin:16px auto 0;
+  min-height:60px;
+  text-align:center;
+  padding:0 10px;
+}
+.slide-caption-text {
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px; font-style:italic;
+  color:var(--text); line-height:1.6;
+  opacity:0; transform:translateY(8px);
+  transition:opacity .35s ease, transform .35s ease;
+}
+.slide-caption-text.visible {
+  opacity:1; transform:translateY(0);
+}
+
 /* counter */
 .slider-counter {
   margin-top:14px;
@@ -558,6 +577,8 @@ h1 em { font-style:italic; color:var(--deep-rose); display:block; }
   text-transform:uppercase; color:var(--rose);
   opacity:.7;
 }
+
+
 
 .g-placeholder { display:none; }
 .upload-zone {
@@ -789,24 +810,24 @@ h1 em { font-style:italic; color:var(--deep-rose); display:block; }
         <div class="info-item">
           <span class="icon">📅</span>
           <div class="label">Дата</div>
-          <div class="value">13 июня</div><!-- ЗАМЕНИ -->
+          <div class="value">13 июня</div>
         </div>
         <div class="info-item">
           <span class="icon">🕖</span>
           <div class="label">Время</div>
-          <div class="value">15:00</div><!-- ЗАМЕНИ -->
+          <div class="value">15:00</div>
         </div>
         <div class="info-item">
           <span class="icon">📍</span>
           <div class="label">Место</div>
-          <div class="value small">Твой уютный дом</div><!-- ЗАМЕНИ -->
+          <div class="value small">Твой уютный дом</div>
         </div>
         <div class="info-item">
           <span class="icon">👑</span>
           <div class="label">Виновница</div>
-          <div class="value">Ляйсян</div><!-- ЗАМЕНИ -->
+          <div class="value">Ляйсян</div>
         </div>
-      </div><!-- ЗАМЕНИ НОМЕР -->
+      </div>
     </div>
   </div>
 </section>
@@ -833,23 +854,23 @@ h1 em { font-style:italic; color:var(--deep-rose); display:block; }
   <p class="section-sub">Всё придумано с любовью — только для тебя</p>
   <div class="program-list">
     <div class="program-item">
-      <div class="prog-time">16:00</div><div class="prog-dot"></div>
-      <div class="prog-text"><strong>Сбор гостей</strong>Встречаем тебя с объятиями и шампанским 🥂</div>
+      <div class="prog-time">15:00</div><div class="prog-dot"></div>
+      <div class="prog-text"><strong>Сбор гостей</strong>Встречаем тебя с объятиями 🌸</div>
     </div>
     <div class="program-item">
-      <div class="prog-time">16:30</div><div class="prog-dot"></div>
+      <div class="prog-time">15:30</div><div class="prog-dot"></div>
       <div class="prog-text"><strong>Посиделки и вкусняшки</strong>Уютный стол, вкусная еда и самые тёплые разговоры 🍓</div>
     </div>
     <div class="program-item">
-      <div class="prog-time">17:30</div><div class="prog-dot"></div>
-      <div class="prog-text"><strong>Эстетичные конкурсы</strong>Красиво, весело и с душой — специально для тебя 🎀</div>
+      <div class="prog-time">16:30</div><div class="prog-dot"></div>
+      <div class="prog-text"><strong>Время конкурсов</strong>Красиво, весело и с душой — специально для тебя 🎀</div>
     </div>
     <div class="program-item">
-      <div class="prog-time">18:30</div><div class="prog-dot"></div>
+      <div class="prog-time">17:30</div><div class="prog-dot"></div>
       <div class="prog-text"><strong>Зажигательная вечеринка</strong>Танцы, музыка и самые яркие моменты ✨</div>
     </div>
     <div class="program-item">
-      <div class="prog-time">20:00</div><div class="prog-dot"></div>
+      <div class="prog-time">19:00</div><div class="prog-dot"></div>
       <div class="prog-text"><strong>Финал</strong>Тосты, объятия и слова от всего сердца 💕</div>
     </div>
   </div>
@@ -915,9 +936,6 @@ h1 em { font-style:italic; color:var(--deep-rose); display:block; }
   </div>
 </section>
 
-
-
-
 <!-- ═══ GALLERY ══════════════════════════════════════════════════ -->
 <!-- ФОТО: замени src у каждого <img> на свой файл или ссылку     -->
 <section class="gallery">
@@ -940,6 +958,9 @@ h1 em { font-style:italic; color:var(--deep-rose); display:block; }
   </div>
 
   <div class="slider-dots" id="slider-dots"></div>
+  <div class="slide-caption-box">
+    <div class="slide-caption-text" id="slide-caption-text"></div>
+  </div>
   <div class="slider-counter"><span id="sl-cur">1</span> / <span id="sl-total">8</span></div>
 </section>
 
@@ -973,7 +994,7 @@ h1 em { font-style:italic; color:var(--deep-rose); display:block; }
     <span style="width:700px;height:700px;animation-delay:1.6s"></span>
   </div>
 
-  <div class="closing-name reveal">Ляйсян,</div><!-- ЗАМЕНИ -->
+  <div class="closing-name reveal">Ляйсян,</div>
   <p class="closing-text reveal">
     впереди — самая красивая глава в твоей жизни.<br>
     Сегодня мы здесь, чтобы ты чувствовала: ты безмерно любима. 🌸
@@ -1007,7 +1028,6 @@ let mx=0,my=0,rx=0,ry=0;
 const isTouch = window.matchMedia('(hover:none) and (pointer:coarse)').matches;
 
 if(isTouch){
-  // на телефоне — курсор следует за пальцем, прячется когда палец убран
   cursorEl.style.transition   = 'opacity .25s ease';
   cursorRing.style.transition = 'opacity .25s ease, transform .15s ease';
   document.addEventListener('touchmove', e=>{
@@ -1024,7 +1044,6 @@ if(isTouch){
   }, {passive:true});
   document.addEventListener('touchend',   ()=>{ cursorEl.style.opacity='0'; cursorRing.style.opacity='0'; });
   document.addEventListener('touchcancel',()=>{ cursorEl.style.opacity='0'; cursorRing.style.opacity='0'; });
-  // start hidden
   cursorEl.style.opacity='0'; cursorRing.style.opacity='0';
   cursorEl.style.display='block'; cursorRing.style.display='block';
 } else {
@@ -1044,16 +1063,12 @@ const cCtx=cCvs.getContext('2d');
 let W,H,parts=[],tabVisible=true;
 function resizeC(){W=cCvs.width=window.innerWidth;H=cCvs.height=window.innerHeight}
 resizeC();
-// throttle resize
 let resizeT; window.addEventListener('resize',()=>{clearTimeout(resizeT);resizeT=setTimeout(resizeC,200)});
-// pause when tab hidden
 document.addEventListener('visibilitychange',()=>{tabVisible=!document.hidden});
 const COLS=['#f2c4c4','#d4728a','#f7e9d7','#a84e65'];
 function rp(){return{x:Math.random()*W,y:Math.random()*H,r:Math.random()*4+2,d:Math.random()*.6+.3,color:COLS[Math.random()*COLS.length|0],angle:Math.random()*360,spin:(Math.random()-.5)*3,vx:(Math.random()-.5)*1,alpha:Math.random()*.5+.2}}
-// only 28 particles
 for(let i=0;i<28;i++) parts.push(rp());
 function drawP(p){cCtx.save();cCtx.globalAlpha=p.alpha;cCtx.translate(p.x,p.y);cCtx.rotate(p.angle*Math.PI/180);cCtx.fillStyle=p.color;cCtx.beginPath();cCtx.arc(0,0,p.r,0,Math.PI*2);cCtx.fill();cCtx.restore()}
-// run at ~30fps not 60
 let lastC=0;
 (function animC(ts){
   requestAnimationFrame(animC);
@@ -1069,10 +1084,6 @@ document.querySelectorAll('.reveal,.section-title,.section-sub,.program-item,.pa
 document.querySelectorAll('.program-item').forEach((el,i)=>el.style.transitionDelay=(i*.12)+'s');
 
 // ─── Countdown ─────────────────────────────────────────────────
-// ЗАМЕНИ дату ниже на свою: new Date('YYYY-MM-DDTHH:MM:SS')
-// Самарское время = UTC+4 (нет перехода на летнее)
-// 13 июня 2026, 00:00 по Самаре = 13 июня 2026, 20:00 UTC предыдущего дня
-// т.е. UTC: 2026-06-12T20:00:00Z
 const EVENT_DATE = new Date('2026-06-13T00:00:00+04:00');
 function updateCD(){
   const diff = EVENT_DATE - Date.now();
@@ -1091,7 +1102,6 @@ function updateCD(){
   document.getElementById('cd-s').textContent = String(secs).padStart(2,'0');
 }
 updateCD(); setInterval(updateCD, 1000);
-
 
 // ─── Fireworks in closing section ──────────────────────────────
 const fwCvs=document.getElementById('fw-canvas');
@@ -1146,7 +1156,6 @@ function animFW(){
 }
 animFW();
 
-// start fireworks when closing section enters view
 const fwObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting&&!fwActive){
@@ -1175,7 +1184,6 @@ fwObs.observe(document.querySelector('.closing'));
   slTotal.textContent = N;
   let current = 0;
 
-  // build dots
   slides.forEach((_,i)=>{
     const d = document.createElement('div');
     d.className = 'sl-dot' + (i===0?' active':'');
@@ -1185,24 +1193,38 @@ fwObs.observe(document.querySelector('.closing'));
 
   function getDots(){ return Array.from(dotsBox.querySelectorAll('.sl-dot')); }
 
+  const captions = [
+    '',
+    'Мы всегда были, есть и будем в твоей жизни, очень тебя ценим и любим! Верим что с Ильдаром ты станешь самой любимой и счастливой 💕',
+    'Между этими кадрами — целая жизнь, полная любви 🌸',
+    'Между этими кадрами — целая жизнь, полная любви 🌸',
+    'Пусть предстоящая семейная жизнь будет праздником каждый день ✨',
+    'Хочу чтобы в твоей жизни были только правильные люди. Ты для меня очень важный человек 💗',
+    'Пусть каждый момент будет наполнен смехом и счастливыми воспоминаниями 🎀',
+    'Надеюсь Ильдар уже обучен фотосъёмке. Потому что такую красоту надо уметь запечатлеть! Желаю ярких воспоминаний и нежных чувств не только на фотографиях, но и в памяти! 📸',
+  ];
+  const captionEl = document.getElementById('slide-caption-text');
+
   function goTo(idx, smooth=true){
     current = (idx + N) % N;
     const slide = slides[current];
-    // center the slide in the track
     const trackW = track.offsetWidth;
     const slideL = slide.offsetLeft;
     const slideW = slide.offsetWidth;
     track.scrollTo({ left: slideL - (trackW - slideW)/2, behavior: smooth?'smooth':'instant' });
-    // active classes
     slides.forEach((s,i)=> s.classList.toggle('active', i===current));
     getDots().forEach((d,i)=> d.classList.toggle('active', i===current));
     slCur.textContent = current + 1;
+    if(captionEl){
+      captionEl.classList.remove('visible');
+      captionEl.textContent = captions[current] || '';
+      if(captions[current]) setTimeout(()=>captionEl.classList.add('visible'), 50);
+    }
   }
 
   btnPrev.onclick = ()=> goTo(current - 1);
   btnNext.onclick = ()=> goTo(current + 1);
 
-  // snap on scroll end
   let scrollTimer;
   track.addEventListener('scroll', ()=>{
     clearTimeout(scrollTimer);
@@ -1217,7 +1239,6 @@ fwObs.observe(document.querySelector('.closing'));
     }, 80);
   }, {passive:true});
 
-  // touch swipe
   let tx0=0;
   track.addEventListener('touchstart', e=>{ tx0=e.touches[0].clientX; }, {passive:true});
   track.addEventListener('touchend',   e=>{
@@ -1225,13 +1246,11 @@ fwObs.observe(document.querySelector('.closing'));
     if(Math.abs(dx)>40) goTo(dx<0 ? current+1 : current-1);
   }, {passive:true});
 
-  // mouse drag
   let dragging=false, dx0=0, sx0=0;
   track.addEventListener('mousedown', e=>{ dragging=true; dx0=e.clientX; sx0=track.scrollLeft; track.style.userSelect='none'; });
   window.addEventListener('mousemove', e=>{ if(!dragging)return; track.scrollLeft=sx0-(e.clientX-dx0); });
   window.addEventListener('mouseup',   ()=>{ dragging=false; track.style.userSelect=''; });
 
-  // lightbox on click
   const lightbox = document.getElementById('lightbox');
   const lbImg    = document.getElementById('lb-img');
   let lbIdx=0;
@@ -1260,7 +1279,6 @@ fwObs.observe(document.querySelector('.closing'));
     if(e.key==='ArrowRight') document.getElementById('lb-next').click();
   });
 
-  // sync blurred backgrounds
   function syncBg(){
     slides.forEach(slide=>{
       const img = slide.querySelector('img');
@@ -1269,7 +1287,6 @@ fwObs.observe(document.querySelector('.closing'));
       }
     });
   }
-  // run after images load
   let loaded=0;
   slides.forEach(s=>{
     const img=s.querySelector('img');
@@ -1279,7 +1296,6 @@ fwObs.observe(document.querySelector('.closing'));
   });
   syncBg();
 
-  // init
   goTo(0, false);
 })();
 </script>
