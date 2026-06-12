@@ -955,6 +955,8 @@ h1 em { font-style:italic; color:var(--deep-rose); display:block; }
       <div class="slide" data-idx="5"><img src="photo6.jpg" alt="Фото 6" onerror="this.parentElement.innerHTML='<div class=slide-placeholder>📷 Фото 6</div>'"></div>
       <div class="slide" data-idx="6"><img src="photo7.jpg" alt="Фото 7" onerror="this.parentElement.innerHTML='<div class=slide-placeholder>📷 Фото 7</div>'"></div>
       <div class="slide" data-idx="7"><img src="photo8.jpg" alt="Фото 8" onerror="this.parentElement.innerHTML='<div class=slide-placeholder>📷 Фото 8</div>'"></div>
+      <div class="slide" data-idx="8"><img src="photo9.jpg" alt="Фото 9" onerror="this.parentElement.innerHTML='<div class=slide-placeholder>📷 Фото 9</div>'"></div>
+      <div class="slide" data-idx="9"><img src="photo10.jpg" alt="Фото 10" onerror="this.parentElement.innerHTML='<div class=slide-placeholder>📷 Фото 10</div>'"></div>
     </div>
   </div>
 
@@ -962,7 +964,7 @@ h1 em { font-style:italic; color:var(--deep-rose); display:block; }
   <div class="slide-caption-box">
     <div class="slide-caption-text" id="slide-caption-text"></div>
   </div>
-  <div class="slider-counter"><span id="sl-cur">1</span> / <span id="sl-total">8</span></div>
+  <div class="slider-counter"><span id="sl-cur">1</span> / <span id="sl-total">10</span></div>
 </section>
 
 <!-- ЛАЙТБОКС -->
@@ -1203,6 +1205,8 @@ fwObs.observe(document.querySelector('.closing'));
     'Хочу чтобы в твоей жизни были только правильные люди. Ты для меня очень важный человек 💗',
     'Пусть каждый момент будет наполнен смехом и счастливыми воспоминаниями 🎀',
     'Надеюсь Ильдар уже обучен фотосъёмке. Потому что такую красоту надо уметь запечатлеть! Желаю ярких воспоминаний и нежных чувств не только на фотографиях, но и в памяти! 📸',
+    'Пусть ваш семейный очаг горит ярче солнца, согревая вас и ваших будущих детей. Желаю, чтобы все ваши мечты сбывались, а совместные планы воплощались в реальность 🔥',
+    'Пусть твои глаза всегда сияют от счастья и огонёк в них никогда не угаснет! ✨',
   ];
   const captionEl = document.getElementById('slide-caption-text');
 
@@ -1236,15 +1240,18 @@ fwObs.observe(document.querySelector('.closing'));
         const dist = Math.abs(s.offsetLeft + s.offsetWidth/2 - center);
         if(dist < minDist){ minDist=dist; closest=i; }
       });
-      if(closest !== current) goTo(closest, false);
-    }, 80);
-  }, {passive:true});
-
-  let tx0=0;
-  track.addEventListener('touchstart', e=>{ tx0=e.touches[0].clientX; }, {passive:true});
-  track.addEventListener('touchend',   e=>{
-    const dx = e.changedTouches[0].clientX - tx0;
-    if(Math.abs(dx)>40) goTo(dx<0 ? current+1 : current-1);
+      if(closest !== current){
+        current = closest;
+        slides.forEach((s,i)=> s.classList.toggle('active', i===current));
+        getDots().forEach((d,i)=> d.classList.toggle('active', i===current));
+        slCur.textContent = current + 1;
+        if(captionEl){
+          captionEl.classList.remove('visible');
+          captionEl.textContent = captions[current] || '';
+          if(captions[current]) setTimeout(()=>captionEl.classList.add('visible'), 50);
+        }
+      }
+    }, 100);
   }, {passive:true});
 
   let dragging=false, dx0=0, sx0=0;
